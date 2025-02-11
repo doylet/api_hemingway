@@ -41,14 +41,13 @@ def analyze_text_with_gpt(text):
     if cached_result:
         return json.loads(cached_result) # Return cached result if available
 
+    # ✅ Improved Prompt
     prompt = f"""
-    Analyze the following text like Hemingway Editor. Identify:
-    - Long or complex sentences (20+ words)
-    - Passive voice usage
-    - Overuse of adverbs (-ly words)
-    - Readability score (Flesch-Kincaid)
-    
-    Return the response in JSON format with keys: long_sentences, passive_voice, adverbs, readability.
+    Analyze the following text and return a JSON response with:
+    - "long_sentences": List of sentences over 20 words + rewrite suggestions
+    - "passive_voice": List of passive voice sentences + suggestions to make active
+    - "adverbs": List of adverbs + whether they weaken the sentence
+    - "readability": Flesch-Kincaid readability score + explanation
 
     Text:
     "{text}"
