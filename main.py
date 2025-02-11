@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from dotenv import load_dotenv
 import redis
@@ -18,6 +19,15 @@ client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY_SMARTSHEET"))
 redis_client = redis.Redis.from_url(os.getenv("REDIS_URL"), decode_responses=True)
 
 app = FastAPI(title="Hemingway API", description="Analyze text for readability, adverbs, passive voice, and complexity.")
+
+# ✅ Add CORS Middleware to allow Chrome Extensions
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins (change to your extension ID for security)
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all HTTP methods (POST, GET, OPTIONS, etc.)
+    allow_headers=["*"],  # Allow all headers
+)
 
 # Request body model
 class TextInput(BaseModel):
