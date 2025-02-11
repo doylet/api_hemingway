@@ -15,7 +15,7 @@ client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY_SMARTSHEET"))
 # print([model.id for model in models.data])
 
 # Initialize Redis client
-redis_client = redis.Redis.from_url(os.getenv("REDIS_URL"), decode_responses=True)
+redis_client = redis.ConnectionPool.from_url(os.getenv("REDIS_URL"), decode_responses=True)
 
 app = FastAPI(title="Hemingway API", description="Analyze text for readability, adverbs, passive voice, and complexity.")
 
